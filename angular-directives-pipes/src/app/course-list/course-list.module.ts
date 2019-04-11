@@ -12,6 +12,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material';
+import { MinutesToTimePipe } from './pipes/minutes-to-time.pipe';
+import { CreationDateStatusDirective } from './directives/creation-date-status.directive';
+import { FilterByPipe } from './pipes/filter-by.pipe';
+import { OrderByPipe } from './pipes/order-by.pipe';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
@@ -28,7 +32,14 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
   declarations: [
     CourseListComponent,
     CourseListItemComponent,
+    MinutesToTimePipe,
+    CreationDateStatusDirective,
+    FilterByPipe,
+    OrderByPipe,
     ConfirmationDialogComponent
+  ],
+  providers: [
+    FilterByPipe
   ],
   entryComponents: [ConfirmationDialogComponent]
 })

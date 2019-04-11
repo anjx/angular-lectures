@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Course } from '../../models/course';
 import { CourseService } from '../../services/course.service';
+import { FilterByPipe } from '../../pipes/filter-by.pipe';
 import { MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
@@ -11,16 +12,22 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 })
 export class CourseListComponent implements OnInit {
   courses: Course[];
+  filteredCourses: Course[];
   hasMoreCourses: boolean;
   searchCriteria: string;
 
-  constructor(private courseService: CourseService, private dialog: MatDialog) {}
+  constructor(private courseService: CourseService, private filterByPipe: FilterByPipe<Course>, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.courseService.getList().subscribe(({ courses, hasMoreCourses }) => {
       this.courses = courses;
       this.hasMoreCourses = hasMoreCourses;
+      this.filter();
     });
+  }
+
+  filter() {
+    this.filteredCourses = this.filterByPipe.transform(this.courses, 'title', this.searchCriteria);
   }
 
   addCourse() {
@@ -44,6 +51,7 @@ export class CourseListComponent implements OnInit {
       if (isConfirmed) {
         this.courseService.removeItem(course).subscribe(({ id }) => {
           this.courses = this.courses.filter(_course => _course.id !== id);
+          this.filter();
         });
       }
     });

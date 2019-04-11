@@ -1,4 +1,6 @@
 <mat-card class="course-item"
+  appCreationDateStatus
+  [creationDateString]="course.creationDate"
   [ngClass]="{ 'course-item--top-rated': course.topRated }">
   <section class="course-item__content">
     <header class="card-header">
@@ -8,7 +10,7 @@
       </h2>
       <div class="card-header__info">
         <div class="card-header__info__duration">
-          {{course.duration}}
+          {{course.duration | minutesToTime}}
         </div>
         <div class="card-header__info__date">
           {{course.creationDate | date : 'MM.dd.yyyy'}}
