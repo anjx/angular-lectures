@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Course } from '../../../courses/models/course';
 import { CourseService } from '../../../courses/services/course.service';
 import { MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from '../../components/confirmation-dialog/confirmation-dialog.component';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, Subscription, of } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 
 @Component({
@@ -21,6 +21,7 @@ export class CourseListPageComponent implements OnInit {
   currentPage = 0;
 
   private debounceSubject = new Subject<string>();
+  private subscription = new Subscription();
 
   constructor(private courseService: CourseService,
               private dialog: MatDialog,
@@ -42,14 +43,16 @@ export class CourseListPageComponent implements OnInit {
     if (!this.isLoading) {
       this.isLoading = true;
 
-      this.courseService.getList(this.currentPage, searchCriteria).subscribe(({ courses, hasMoreCourses }) => {
-        this.courses = this.courses.concat(courses);
+      this.subscription.add(
+        this.courseService.getList(this.currentPage, searchCriteria).subscribe(({ courses, hasMoreCourses }) => {
+          this.courses = this.courses.concat(courses);
 
-        this.hasMoreCourses = hasMoreCourses;
+          this.hasMoreCourses = hasMoreCourses;
 
-        this.isLoading = false;
-        this.currentPage++;
-      });
+          this.isLoading = false;
+          this.currentPage++;
+        }, (error) => console.log('error was handled', error))
+      );
     }
   }
 

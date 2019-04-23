@@ -1,8 +1,8 @@
 import { CourseResponse } from './../models/course';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map, retry } from 'rxjs/operators';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError, of } from 'rxjs';
+import { map, retry, catchError, tap } from 'rxjs/operators';
+import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { Course } from '../models/course';
 
@@ -19,9 +19,14 @@ export class CourseService {
       .set('count', (this.LIMIT).toString())
       .set('textFragment', searchCriteria || '');
 
-    return this.http.get<Course[]>(this.COURSES_URL, { params })
+    const headers = new HttpHeaders()
+      .set('api-version', '2');
+
+    return this.http.get<Course[]>(this.COURSES_URL, { params, headers })
       .pipe(
         retry(4),
+        catchError(this.handleError),
+        tap(() => console.log('the flow was continued')),
         map((courses) => ({ courses, hasMoreCourses: courses.length === this.LIMIT }))
       );
   }
@@ -40,5 +45,10 @@ export class CourseService {
 
   removeItem(course: Course): Observable<any> {
     return this.http.delete(`${this.COURSES_URL}/${course.id}`);
+  }
+
+  private handleError(error: HttpErrorResponse): Observable<any> {
+    console.log(error);
+    return of([]);
   }
 }
