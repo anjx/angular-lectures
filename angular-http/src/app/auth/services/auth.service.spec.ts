@@ -1,3 +1,4 @@
+import { of, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
@@ -21,28 +22,47 @@ describe('AuthService', () => {
   });
 
   describe('#login', () => {
-    it('should log in', () => {
-
+    it('should log in', (done) => {
+      spyOn(service, 'getUserInfo').and.returnValue(of({}));
+      mockHttp.post.and.returnValue(of({ token: 'sometoken' }));
+      service.login('username', 'password').subscribe(() => {
+        expect(service.getUserInfo).toHaveBeenCalled();
+        expect(localStorage.accessToken).toEqual(JSON.stringify('sometoken'));
+        done();
+      });
     });
 
-    it('should store user data in local storage', () => {
+    it('should handle regular error', (done) => {
+      mockHttp.post.and.returnValue(throwError({ status: 400, message: 'some message' }));
+      service.login('username', 'password').subscribe(() => {}, (error) => {
+        expect(error).toEqual({ status: 400, message: 'some message' });
+        done();
+      });
+    });
 
+    it('should handle incorrect username or password error', (done) => {
+      mockHttp.post.and.returnValue(throwError({ status: 401, message: 'some message' }));
+      service.login('username', 'password').subscribe(() => {}, (error) => {
+        expect(error).toEqual({ status: 401, message: 'Incorrect username or password' });
+        done();
+      });
     });
   });
 
   describe('#logout', () => {
     it('should log out', () => {
-
+      spyOn(localStorage, 'removeItem');
+      service.logout();
+      expect(localStorage.removeItem).toHaveBeenCalledWith('accessToken');
     });
 
-    it('should remove user info', () => {
+    it('should remove user info', (done) => {
+      service.logout();
 
-    });
-  });
-
-  describe('#getUserInfo', () => {
-    it('should return stored user info', () => {
-
+      service.user$.subscribe((user) => {
+        expect(user).toBeFalsy();
+        done();
+      });
     });
   });
 

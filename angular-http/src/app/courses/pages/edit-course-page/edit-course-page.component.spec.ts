@@ -6,7 +6,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditCoursePageComponent } from './edit-course-page.component';
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { Course } from '../../models/course';
-import { BreadcrumbsService } from 'src/app/core/services/breadcrumbs.service';
 
 @Component({
   selector: 'app-course-form',
@@ -73,7 +72,6 @@ describe('EditCoursePageComponent', () => {
         { provide: CourseService, useValue: mockService },
         { provide: Router, useValue: mockRouter },
         { provide: ActivatedRoute, useValue: mockRoute },
-        { provide: BreadcrumbsService, useValue: mockBreadcrumbsService },
       ]
     })
     .compileComponents();

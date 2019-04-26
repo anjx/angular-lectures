@@ -4,8 +4,9 @@ import { CUSTOM_ELEMENTS_SCHEMA, Directive, Input } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { HeaderComponent } from './header.component';
 import { AuthService } from '../../../auth/services/auth.service';
-import { of } from 'rxjs';
+import { of, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { User } from 'src/app/auth/models/user';
 
 @Directive({ // tslint:disable-next-line
   selector: '[routerLink]'
@@ -20,19 +21,18 @@ describe('HeaderComponent', () => {
   let mockAuthService;
   let mockRouter;
 
-  let isAuthenticated = false;
-
   const mockUser = {
     id: 1,
-    firstName: 'First',
-    lastName: 'Last'
+    name: {
+      first: 'First',
+      last: 'Last'
+    }
   };
 
   beforeEach(async(() => {
     mockAuthService = {
       logout: jasmine.createSpy('logout').and.returnValue(of(false)),
-      isAuthenticated$: of(isAuthenticated),
-      getUserInfo: jasmine.createSpy('getUserInfo').and.returnValue(mockUser),
+      user$: new BehaviorSubject<User>(null),
     };
 
     mockRouter = {
@@ -62,10 +62,6 @@ describe('HeaderComponent', () => {
   });
 
   describe('user is logged out', () => {
-    beforeAll(() => {
-      isAuthenticated = false;
-    });
-
     it('should retrive login page by login button click', () => {
       const button = fixture.debugElement.query(By.css('.user-controls button'));
       button.triggerEventHandler('click', null);
@@ -73,14 +69,15 @@ describe('HeaderComponent', () => {
     });
   });
 
-  xdescribe('user is logged in', () => {
-    beforeAll(() => {
-      isAuthenticated = true;
+  describe('user is logged in', () => {
+    beforeEach(() => {
+      component.user$.next(mockUser);
+      fixture.detectChanges();
     });
 
     it('should show current user first and last name', () => {
       const userInfo = fixture.debugElement.query(By.css('.user-controls__info'));
-      expect(userInfo.nativeElement.innerText).toEqual(`${mockUser.firstName} ${mockUser.lastName}`);
+      expect(userInfo.nativeElement.innerText).toEqual(`${mockUser.name.first} ${mockUser.name.last}`);
     });
 
     it('should logout by logout button click', () => {

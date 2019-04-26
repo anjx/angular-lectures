@@ -18,7 +18,6 @@ export class BreadcrumbsComponent implements OnInit {
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         let currentRoute = this.route.snapshot.firstChild;
-
         this.segments = new Set<BreadcrumbsSegment>();
 
         while (currentRoute && currentRoute.data && currentRoute.data.breadcrumb) {

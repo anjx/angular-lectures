@@ -1,5 +1,5 @@
 import { of } from 'rxjs';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { LoginPageComponent } from './login-page.component';
@@ -51,12 +51,12 @@ describe('LoginPageComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  xit('should login', () => {
+  it('should login', () => {
     component.userName = 'username';
     component.password = 'p455w0rd';
     fixture.detectChanges();
     const form = fixture.debugElement.query(By.css('form'));
     form.triggerEventHandler('submit', null);
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
+    expect(mockAuthService.login).toHaveBeenCalledWith('username', 'p455w0rd');
   });
 });

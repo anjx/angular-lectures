@@ -1,7 +1,7 @@
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,22 +13,21 @@ import { CourseService } from '../../../courses/services/course.service';
 import { Course, CourseResponse } from '../../../courses/models/course';
 import { OrderByPipe } from '../../../courses/pipes/order-by.pipe';
 import { FilterByPipe } from '../../../courses/pipes/filter-by.pipe';
-import { BreadcrumbsService } from 'src/app/core/services/breadcrumbs.service';
 import { MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 
 const mockCourse = {
   id: 1,
-  title: 'Title 1',
-  creationDate: '2018-05-09',
-  duration: 34,
+  name: 'Title 1',
+  date: '2018-05-09',
+  length: 34,
   description: 'Description 1'
 };
 
 @Component({
   selector: 'app-course-item',
   template: `
-    <h1 class="title-stub">{{ course.title }}</h1>
+    <h1 class="title-stub">{{ course.name }}</h1>
     <button class="edit-stub" (click)="edit.emit(course)"></button>
     <button class="remove-stub" (click)="remove.emit(course)"></button>
   `
@@ -73,8 +72,7 @@ describe('CourseListPageComponent', () => {
       getList: jasmine.createSpy('getCourses').and.returnValue(of({...mockCourses})),
       createCourse: jasmine.createSpy('updateItem'),
       updateItem: jasmine.createSpy('updateItem'),
-      removeItem: jasmine.createSpy('removeItem').and.returnValue(of()),
-      loadMoreCourses: jasmine.createSpy('loadMoreCourses'),
+      removeItem: jasmine.createSpy('removeItem').and.returnValue(of({})),
     };
 
     mockBreadcrumbsService = {
@@ -95,7 +93,7 @@ describe('CourseListPageComponent', () => {
     };
 
     mockDialog = {
-      open: jasmine.createSpy('dialog.open').and.returnValues({ afterClosed: () => of(true) })
+      open: jasmine.createSpy('dialog.open').and.returnValue({ afterClosed: () => of(true) })
     };
 
     TestBed.configureTestingModule({
@@ -114,7 +112,6 @@ describe('CourseListPageComponent', () => {
       ],
       providers: [
         FilterByPipe,
-        { provide: BreadcrumbsService, useValue: mockBreadcrumbsService },
         { provide: CourseService, useValue: mockService },
         { provide: Router, useValue: mockRouter },
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
@@ -162,41 +159,49 @@ describe('CourseListPageComponent', () => {
     fixture.detectChanges();
     const button = fixture.debugElement.query(By.css('.course-list__load-more'));
     expect(button).toBeTruthy();
+    expect(button.nativeElement.innerText).toEqual('Load more');
   });
 
-  xdescribe('#filter', () => {
-    it('should search courses', () => {
-      component.searchCriteria = '1';
-      fixture.detectChanges();
-      const form = fixture.debugElement.query(By.css('.course-toolbar__search form'));
-      form.triggerEventHandler('submit', null);
-      fixture.detectChanges();
-      const resultTitle = fixture.debugElement.query(By.css('app-course-item .title-stub'));
-      expect(resultTitle.nativeElement.innerText).toEqual(mockCourses.courses[0].name);
-    });
+  describe('#filter', () => {
+    it('should search courses', fakeAsync(() => {
+      component.onSearchCriteriaChange('Title 1');
+      tick(1000);
+      expect(mockService.getList).toHaveBeenCalledWith(0, 'Title 1');
+    }));
   });
 
-  xdescribe('#loadMore', () => {
+  describe('#loadMore', () => {
     it('should load more courses', () => {
       const button = fixture.debugElement.query(By.css('.course-list__load-more'));
       button.triggerEventHandler('click', null);
-      expect(mockService.loadMoreCourses).toHaveBeenCalled();
+      expect(mockService.getList).toHaveBeenCalled();
     });
   });
 
-  xdescribe('#editCourse', () => {
+  describe('#editCourse', () => {
     it('should edit course', () => {
       const stubTrigger = fixture.debugElement.query(By.css('.edit-stub'));
       stubTrigger.triggerEventHandler('click', null);
-      expect(mockRouter.navigate).toHaveBeenCalledWith([mockCourses.courses[0].id]);
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['courses', mockCourses.courses[0].id]);
     });
   });
 
-  xdescribe('#removeCourse', () => {
+  describe('#removeCourse', () => {
     it('should remove course', () => {
       const stubTrigger = fixture.debugElement.query(By.css('.remove-stub'));
+      spyOn(component, 'reloadCourses');
       stubTrigger.triggerEventHandler('click', null);
       expect(mockService.removeItem).toHaveBeenCalledWith(mockCourse);
+      expect(component.reloadCourses).toHaveBeenCalled();
+    });
+
+    it('should do nothing if modal is not confirmed', () => {
+      const stubTrigger = fixture.debugElement.query(By.css('.remove-stub'));
+      mockDialog.open.and.returnValue({ afterClosed: () => of(false) });
+      spyOn(component, 'reloadCourses');
+      stubTrigger.triggerEventHandler('click', null);
+      expect(mockService.removeItem).not.toHaveBeenCalled();
+      expect(component.reloadCourses).not.toHaveBeenCalled();
     });
   });
 });

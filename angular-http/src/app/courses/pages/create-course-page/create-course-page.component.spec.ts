@@ -5,7 +5,6 @@ import { CreateCoursePageComponent } from './create-course-page.component';
 import { Component, Output, EventEmitter } from '@angular/core';
 import { Course } from '../../models/course';
 import { Router, ActivatedRoute } from '@angular/router';
-import { BreadcrumbsService } from 'src/app/core/services/breadcrumbs.service';
 import { of } from 'rxjs';
 
 @Component({
@@ -59,7 +58,6 @@ describe('CreateCoursePageComponent', () => {
         { provide: CourseService, useValue: mockService },
         { provide: Router, useValue: mockRouter },
         { provide: ActivatedRoute, useValue: mockRoute },
-        { provide: BreadcrumbsService, useValue: mockBreadcrumbsService },
       ]
     })
     .compileComponents();

@@ -1,18 +1,24 @@
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from './auth/services/auth.service';
+import { LoaderService } from './core/services/loader.service';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
   let component: AppComponent;
   let mockAuth;
+  let mockLoaderService;
 
   beforeEach(async(() => {
     mockAuth = {
-      isAuthenticated$: of(true)
+      user$: of({})
+    };
+
+    mockLoaderService = {
+      loaderState: new Subject()
     };
 
     TestBed.configureTestingModule({
@@ -26,7 +32,8 @@ describe('AppComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        { provide: AuthService, useValue: mockAuth }
+        { provide: AuthService, useValue: mockAuth },
+        { provide: LoaderService, useValue: mockLoaderService },
       ]
     }).compileComponents();
   }));
