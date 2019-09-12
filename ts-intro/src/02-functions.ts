@@ -39,6 +39,7 @@ function args(): void {
     console.log(`Name: ${firstName} ${lastName}`);
   }
 
+  // logName();
   logName('a');
   logName('a', 'b');
   // logName('a', 'b', 'c');
@@ -61,13 +62,25 @@ optionalArgs(1, 2);
 
 function defaultArgs(a = 1, b = 2) { /* */ }
 
+function objectOrNull(): { [key: string]: string } | null {
+  // return null;
+  return { a: '1' };
+}
+
+const arrow = (a: number, b: number): number => a + b;
+
 defaultArgs();
 defaultArgs(1);
 defaultArgs(1, 2);
+// defaultArgs('1', 2);
 
 //--------------------------------------------------
 
 // Function newer returns, must have unreachable end point
 function error(): never {
   throw new Error();
+}
+
+function foo(): { name: string, description: string } {
+  return {} as any;
 }

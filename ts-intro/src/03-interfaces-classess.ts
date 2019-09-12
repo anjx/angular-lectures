@@ -11,7 +11,7 @@ interface ITaskManager {
 const myTask: ITask = {
   name: 'Call Marjie',
   description: 'Do it ASAP',
-  isDone: false,
+  isDone: false
 };
 
 //--------------------------------------------------
@@ -90,15 +90,15 @@ abstract class Vehicle {
 }
 
 class Car extends Vehicle {
-  constructor() { super('Car', 4, 'Four-Stroke') }
+  constructor(public brand: string) { super('Car', 4, 'Four-Stroke') }
 
-  drive() { console.log('I\'m driving the car') }
-  sell() { console.log('selling the car') }
+  drive() { console.log('I\'m driving the car', this.brand) }
+  sell() { console.log('selling the car', this.brand) }
 }
 
 let myVehicle: Vehicle;
 // myVehicle = new Vehicle('name', 0, 'empty'); // Error
-myVehicle = new Car();
+myVehicle = new Car('Mazda');
 myVehicle.print();
 myVehicle.drive();
 // myVehicle.sell(); // Error

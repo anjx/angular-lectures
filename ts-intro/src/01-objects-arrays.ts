@@ -6,6 +6,9 @@ let task: { name: string, description: string } = {
 
 let mapLike: { [key: string]: string } = {
   key: 'value',
+  key2: 'value2',
+  key3: 'value2',
+  key4: 'value2'
   // otherKey: 1, // Error
 };
 

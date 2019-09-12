@@ -27,3 +27,6 @@ let smth: number | string | boolean = 'some stuff';
 smth = 34;
 smth = false;
 // smth = {}; // Error
+
+let a: number;
+a = true as any;
