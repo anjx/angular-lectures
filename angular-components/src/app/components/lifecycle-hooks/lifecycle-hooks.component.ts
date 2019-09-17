@@ -12,10 +12,11 @@ import {
   SimpleChanges,
 } from '@angular/core';
 
+// tslint:disable-next-line: no-conflicting-lifecycle
 @Component({
   selector: 'app-lifecycle-hooks',
   templateUrl: './lifecycle-hooks.component.html',
-  styleUrls: ['./lifecycle-hooks.component.css']
+  styleUrls: ['./lifecycle-hooks.component.scss']
 })
 export class LifecycleHooksComponent
   implements OnInit,
@@ -26,7 +27,9 @@ export class LifecycleHooksComponent
   AfterContentChecked,
   AfterViewInit,
   AfterViewChecked {
-  interval;
+
+  @Input() smth: any;
+  public interval: any;
 
   constructor() {
     console.log('Constructor');

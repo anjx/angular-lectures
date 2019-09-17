@@ -4,7 +4,7 @@ import { Post } from './../../models/post';
 @Component({
   selector: 'app-feed-simple',
   templateUrl: './feed-simple.component.html',
-  styleUrls: ['./feed-simple.component.css']
+  styleUrls: ['./feed-simple.component.scss']
 })
 export class FeedSimpleComponent {
   posts = [
@@ -26,19 +26,13 @@ export class FeedSimpleComponent {
 
   likePost(targetPost: Post) {
     const postIdx = this.posts.findIndex((post) => post.id === targetPost.id);
-    this.posts[postIdx] = {
-      ...this.posts[postIdx],
-      likes: this.posts[postIdx].likes + 1,
-      isLiked: true
-    };
+    this.posts[postIdx].isLiked = true;
+    this.posts[postIdx].likes = this.posts[postIdx].likes + 1;
   }
 
   unlikePost(targetPost: Post) {
     const postIdx = this.posts.findIndex((post) => post.id === targetPost.id);
-    this.posts[postIdx] = {
-      ...this.posts[postIdx],
-      likes: this.posts[postIdx].likes + -1,
-      isLiked: false
-    };
+    this.posts[postIdx].isLiked = false;
+    this.posts[postIdx].likes = this.posts[postIdx].likes - 1;
   }
 }

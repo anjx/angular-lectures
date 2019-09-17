@@ -4,7 +4,7 @@ import { Post } from 'src/app/models/post';
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
-  styleUrls: ['./post.component.css']
+  styleUrls: ['./post.component.scss']
 })
 export class PostComponent implements OnChanges {
   @Input() post: Post;

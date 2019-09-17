@@ -1,32 +1,42 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import {
+  MatInputModule,
+  MatButtonModule,
+  MatCardModule,
+  MatIconModule,
+} from '@angular/material';
+
 import { AppComponent } from './app.component';
+import { BindingsExampleComponent } from './components/bindings-example/bindings-example.component';
+import { TemplateSyntaxComponent } from './components/template-syntax/template-syntax.component';
+import { LifecycleHooksComponent } from './components/lifecycle-hooks/lifecycle-hooks.component';
 import { FeedSimpleComponent } from './components/feed-simple/feed-simple.component';
 import { FeedDecompositionComponent } from './components/feed-decomposition/feed-decomposition.component';
 import { PostComponent } from './components/feed-decomposition/post/post.component';
-import { LifecycleHooksComponent } from './components/lifecycle-hooks/lifecycle-hooks.component';
-import { InterpolationExampleComponent } from './components/interpolation-example/interpolation-example.component';
-import { CustomInterpolationComponent } from './components/interpolation-example/custom-interpolation/custom-interpolation.component';
-import { TwoWayBindingComponent } from './components/two-way-binding/two-way-binding.component';
-import { TemplateSyntaxComponent } from './components/template-syntax/template-syntax.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    InterpolationExampleComponent,
+    BindingsExampleComponent,
+    TemplateSyntaxComponent,
+    LifecycleHooksComponent,
     FeedSimpleComponent,
     FeedDecompositionComponent,
     PostComponent,
-    LifecycleHooksComponent,
-    CustomInterpolationComponent,
-    TwoWayBindingComponent,
-    TemplateSyntaxComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatCardModule,
+    MatIconModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
