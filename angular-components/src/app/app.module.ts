@@ -17,6 +17,7 @@ import { LifecycleHooksComponent } from './components/lifecycle-hooks/lifecycle-
 import { FeedSimpleComponent } from './components/feed-simple/feed-simple.component';
 import { FeedDecompositionComponent } from './components/feed-decomposition/feed-decomposition.component';
 import { PostComponent } from './components/feed-decomposition/post/post.component';
+import { InnerComponent } from './components/template-syntax/inner/inner.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { PostComponent } from './components/feed-decomposition/post/post.compone
     FeedSimpleComponent,
     FeedDecompositionComponent,
     PostComponent,
+    InnerComponent,
   ],
   imports: [
     BrowserModule,

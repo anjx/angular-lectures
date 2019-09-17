@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
+import { InnerComponent } from './inner/inner.component';
 
 @Component({
   selector: 'app-template-syntax',
@@ -10,6 +11,7 @@ export class TemplateSyntaxComponent {
 
   @ViewChild('userInput', {static: false}) userInputRef: ElementRef;
   @ViewChild('randomColoredBlock', {static: false}) randomColoredBlock: ElementRef;
+  @ViewChild(InnerComponent, {static: false}) innerComponent: InnerComponent;
 
   onKeyUp(event: KeyboardEvent) {
     console.log(event);
@@ -20,6 +22,9 @@ export class TemplateSyntaxComponent {
 
     this.randomColoredBlock.nativeElement.style.background = color;
     this.randomColoredBlock.nativeElement.style.borderColor = color;
+
+    console.log(this.innerComponent.innerProperty);
+    this.innerComponent.innerMethod();
   }
 
   private getRandomColor() {
