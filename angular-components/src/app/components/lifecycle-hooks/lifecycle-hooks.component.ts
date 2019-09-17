@@ -65,7 +65,7 @@ export class LifecycleHooksComponent
   }
 
   ngOnDestroy(): void {
-    // clearInterval(this.interval);
+    clearInterval(this.interval);
     console.log('ngOnDestroy');
   }
 

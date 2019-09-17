@@ -18,6 +18,8 @@ import { FeedSimpleComponent } from './components/feed-simple/feed-simple.compon
 import { FeedDecompositionComponent } from './components/feed-decomposition/feed-decomposition.component';
 import { PostComponent } from './components/feed-decomposition/post/post.component';
 import { InnerComponent } from './components/template-syntax/inner/inner.component';
+import { ContentExampleComponent } from './components/content-example/content-example.component';
+import { ContentInnerComponent } from './components/content-example/content-inner/content-inner.component';
 
 
 @NgModule({
@@ -30,6 +32,8 @@ import { InnerComponent } from './components/template-syntax/inner/inner.compone
     FeedDecompositionComponent,
     PostComponent,
     InnerComponent,
+    ContentExampleComponent,
+    ContentInnerComponent,
   ],
   imports: [
     BrowserModule,
