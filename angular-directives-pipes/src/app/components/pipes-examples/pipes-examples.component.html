@@ -105,7 +105,7 @@
       <h3>Please pipe</h3>
       <p>
         <span ngNonBindable>{{ 'consider learning Angular' | please }}</span><br>
-        {{ 'consider learning Angular' | please }}
+        {{ 'consider learning Angular' | please:1:2:3:4:5 }}
       </p>
       <h3>Filter tasks by status</h3>
       <app-tasks-example></app-tasks-example>

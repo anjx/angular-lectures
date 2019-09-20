@@ -7,7 +7,4 @@ import { Component } from '@angular/core';
 })
 export class PipesExamplesComponent {
   public dateString = new Date().toISOString();
-  public tasks = [
-    { name: 'Completed' }
-  ];
 }

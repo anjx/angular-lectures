@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ITask } from '../../models/task';
 
 @Component({
   selector: 'app-tasks-example',
@@ -6,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./tasks-example.component.scss']
 })
 export class TasksExampleComponent {
-  public tasks: any[] = [
+  public tasks: ITask[] = [
     { name: 'Completed task', status: 'completed' },
     { name: 'Started task', status: 'started' },
     { name: 'New task', status: 'new' },

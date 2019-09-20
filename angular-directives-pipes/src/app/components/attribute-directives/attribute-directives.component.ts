@@ -9,7 +9,7 @@ export class AttributeDirectivesComponent {
 
   public color: string;
 
-  public handleClick(event: any) {
+  public handleClick(event: MouseEvent | string) {
     console.log('click', event);
   }
 

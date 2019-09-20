@@ -9,10 +9,6 @@ export class HighlightWithCustomColorDirective implements OnChanges {
   constructor(private elementRef: ElementRef, private renderer2: Renderer2) { }
 
   public ngOnChanges(): void {
-    this.highlight(this.color);
-  }
-
-  private highlight(color: string) {
-    this.renderer2.setStyle(this.elementRef.nativeElement, 'background-color', color);
+    this.renderer2.setStyle(this.elementRef.nativeElement, 'background-color', this.color);
   }
 }

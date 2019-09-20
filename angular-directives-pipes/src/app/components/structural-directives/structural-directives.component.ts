@@ -4,6 +4,7 @@ enum Emotion {
   Sad,
   Confused,
   Happy,
+  Surprised,
 }
 
 @Component({

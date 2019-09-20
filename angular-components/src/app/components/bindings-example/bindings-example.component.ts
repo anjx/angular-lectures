@@ -9,6 +9,8 @@ export class BindingsExampleComponent {
   public message = 'Hello. I\'m a message';
   public username: string;
 
+  public imageWidth = 200;
+
   public innerHtml = '<b>I\'ve been inserted via innerHTML</b>';
 
   public imagePath = 'assets/angular.png';

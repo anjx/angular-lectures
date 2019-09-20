@@ -1,14 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'sortByStatus'
+  name: 'filterByStatus'
 })
-export class StatusPipe implements PipeTransform {
-  transform(allTasks: any[], status: string): any {
+export class StatusPipe<T> implements PipeTransform {
+  transform(allTasks: T[], status: string) {
     if (!allTasks || !status) {
       return allTasks;
     }
 
-    return allTasks.filter(task => task.status === status);
+    return allTasks.filter((task) => task.status === status);
   }
 }

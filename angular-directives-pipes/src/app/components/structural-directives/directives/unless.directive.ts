@@ -3,7 +3,7 @@ import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 /**
  * Add the template content to the DOM unless the condition is true.
  */
-@Directive({ selector: '[appUnless]'})
+@Directive({ selector: '[appUnless]' })
 export class UnlessDirective {
   private hasView = false;
 

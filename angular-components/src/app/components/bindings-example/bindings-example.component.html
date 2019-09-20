@@ -7,7 +7,7 @@
       <p>{{ message }}</p>
 
       <h3>Bind image url with interpolation</h3>
-      <img src="{{ imagePath }}" width="200">
+      <img src="{{ imagePath }}" width="{{ imageWidth }}">
     </section>
 
     <section>
@@ -17,7 +17,7 @@
       <p [textContent]="message"></p>
 
       <h3>Bind image url with property binding</h3>
-      <img [src]="imagePath" [width]="200">
+      <img [src]="imagePath" [width]="imageWidth">
 
       <p [innerHTML]="innerHtml"></p>
 
