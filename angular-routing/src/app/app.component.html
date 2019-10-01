@@ -1,0 +1,25 @@
+<header>
+  <h2>Routing Example</h2>
+</header>
+
+<mat-toolbar>
+  <a [routerLink]="['home']" routerLinkActive="active">Home</a>
+  <a routerLink="simple" routerLinkActive="active">Simple</a>
+
+  <a [routerLink]="['user', '123']" routerLinkActive="active">User</a>
+  <button mat-button (click)="goToUserPage()">User</button>
+
+  <a [routerLink]="['admin']" routerLinkActive="active">Admin</a>
+
+  <!-- <a [routerLink]="['another']" routerLinkActive="active">One</a>
+  <a [routerLink]="['another', 'two']" routerLinkActive="active">Two</a> -->
+
+  <a [routerLink]="['another']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Another module: Page one</a>
+  <a [routerLink]="['another', 'two']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Another module: Page two</a>
+
+  <a [routerLink]="['parent']" routerLinkActive="active">Nested routes</a>
+</mat-toolbar>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
