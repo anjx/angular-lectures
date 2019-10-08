@@ -16,6 +16,9 @@ const routes: Routes = [
   { path: 'home', component: HomePageComponent },
   { path: 'simple', component: SimpleRedicrectComponent },
   { path: 'user/:id', component: UserPageComponent },
+  // http://localhost:4200/user
+
+  { path: 'lazy-loaded', loadChildren: './lazy-loaded/lazy-loaded.module#LazyLoadedModule' },
 
   {
     path: 'admin',
