@@ -32,41 +32,41 @@ export class LifecycleHooksComponent
   public interval: any;
 
   constructor() {
-    console.log('Constructor');
+    console.log('Outer: Constructor');
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('ngOnChanges', changes);
+    console.log('Outer: ngOnChanges', changes);
   }
 
   ngOnInit() {
     // this.interval = setInterval(() => console.log('interval'), 100);
-    console.log('ngOnInit');
+    console.log('Outer: ngOnInit');
   }
 
   ngDoCheck(): void {
-    console.log('ngDoCheck');
+    console.log('Outer: ngDoCheck');
   }
 
   ngAfterContentInit(): void {
-    console.log('ngAfterContentInit');
+    console.log('Outer: ngAfterContentInit');
   }
 
   ngAfterContentChecked(): void {
-    console.log('ngAfterContentChecked');
+    console.log('Outer: ngAfterContentChecked');
   }
 
   ngAfterViewInit(): void {
-    console.log('ngAfterViewInit');
+    console.log('Outer: ngAfterViewInit');
   }
 
   ngAfterViewChecked(): void {
-    console.log('ngAfterViewChecked');
+    console.log('Outer: ngAfterViewChecked');
   }
 
   ngOnDestroy(): void {
     clearInterval(this.interval);
-    console.log('ngOnDestroy');
+    console.log('Outer: ngOnDestroy');
   }
 
 }

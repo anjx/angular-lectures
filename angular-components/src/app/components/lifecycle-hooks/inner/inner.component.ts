@@ -9,16 +9,16 @@ import {
   AfterViewInit,
   AfterViewChecked,
   Input,
-  SimpleChanges,
+  SimpleChanges
 } from '@angular/core';
 
 // tslint:disable-next-line: no-conflicting-lifecycle
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-inner-lyfecycle',
+  templateUrl: './inner.component.html',
+  styleUrls: ['./inner.component.scss']
 })
-export class AppComponent
+export class InnerLifecycleComponent
   implements
     OnInit,
     OnChanges,
@@ -32,40 +32,40 @@ export class AppComponent
   public interval: any;
 
   constructor() {
-    console.log('App: Constructor');
+    console.log('Inner: Constructor');
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('App: ngOnChanges', changes);
+    console.log('Inner: ngOnChanges', changes);
   }
 
   ngOnInit() {
     // this.interval = setInterval(() => console.log('interval'), 100);
-    console.log('App: ngOnInit');
+    console.log('Inner: ngOnInit');
   }
 
   ngDoCheck(): void {
-    console.log('App: ngDoCheck');
+    console.log('Inner: ngDoCheck');
   }
 
   ngAfterContentInit(): void {
-    console.log('App: ngAfterContentInit');
+    console.log('Inner: ngAfterContentInit');
   }
 
   ngAfterContentChecked(): void {
-    console.log('App: ngAfterContentChecked');
+    console.log('Inner: ngAfterContentChecked');
   }
 
   ngAfterViewInit(): void {
-    console.log('App: ngAfterViewInit');
+    console.log('Inner: ngAfterViewInit');
   }
 
   ngAfterViewChecked(): void {
-    console.log('App: ngAfterViewChecked');
+    console.log('Inner: ngAfterViewChecked');
   }
 
   ngOnDestroy(): void {
     clearInterval(this.interval);
-    console.log('App: ngOnDestroy');
+    console.log('Inner: ngOnDestroy');
   }
 }

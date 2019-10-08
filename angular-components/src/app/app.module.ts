@@ -20,6 +20,7 @@ import { PostComponent } from './components/feed-decomposition/post/post.compone
 import { InnerComponent } from './components/template-syntax/inner/inner.component';
 import { ContentExampleComponent } from './components/content-example/content-example.component';
 import { ContentInnerComponent } from './components/content-example/content-inner/content-inner.component';
+import { InnerLifecycleComponent } from './components/lifecycle-hooks/inner/inner.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { ContentInnerComponent } from './components/content-example/content-inne
     InnerComponent,
     ContentExampleComponent,
     ContentInnerComponent,
+    InnerLifecycleComponent
   ],
   imports: [
     BrowserModule,
