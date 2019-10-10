@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, EMPTY } from 'rxjs';
+import { map, catchError, retry } from 'rxjs/operators';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { Course, CourseResponse, CourseAuthor } from '../models/course';
 
 @Injectable()
 export class CourseService {
-  private readonly COURSES_URL = 'http://localhost:3004/courses';
-  private readonly AUTHORS_URL = 'http://localhost:3004/authors';
-  // private readonly COURSES_URL = 'courses';
-  // private readonly AUTHORS_URL = 'authors';
+  // private readonly COURSES_URL = 'http://localhost:3004/courses';
+  // private readonly AUTHORS_URL = 'http://localhost:3004/authors';
+  private readonly COURSES_URL = 'courses';
+  private readonly AUTHORS_URL = 'authors';
   private readonly LIMIT = 10;
 
   constructor(private http: HttpClient) {}
@@ -23,8 +23,17 @@ export class CourseService {
 
     return this.http.get<Course[]>(this.COURSES_URL, { params })
       .pipe(
-        map((courses) => ({ courses, hasMoreCourses: courses.length === this.LIMIT }))
+        retry(4),
+        map((courses) => ({ courses, hasMoreCourses: courses.length === this.LIMIT })),
+        catchError((error) => {
+          console.log('[ERROR]', error);
+          return EMPTY;
+        }),
       );
+
+    // return this.http.get<Course[]>(this.COURSES_URL, { params })
+    //   .toPromise()
+    //   .then((courses) => ({ courses, hasMoreCourses: courses.length === this.LIMIT }));
   }
 
   createCourse(course: Course): Observable<Course>  {

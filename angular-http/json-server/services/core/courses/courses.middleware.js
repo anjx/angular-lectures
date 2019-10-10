@@ -4,11 +4,11 @@ const url = require('url');
 
 module.exports = server => {
   router.get('/courses', (req, res) => {
-    // const token = req.headers['authorization'];
+    const token = req.headers['authorization'];
 
-    // if (!token) {
-    //   return res.status(401).json({ message: 'Unauthorized' });
-    // }
+    if (!token) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
 
     let url_parts = url.parse(req.originalUrl, true),
       query = url_parts.query,

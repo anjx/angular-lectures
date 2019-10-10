@@ -1,6 +1,8 @@
+import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from 'src/app/services/courses.service';
 import { Course } from 'src/app/models/course';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-courses',
@@ -9,6 +11,7 @@ import { Course } from 'src/app/models/course';
 })
 export class CoursesComponent implements OnInit {
   public courses: Course[];
+  public courses$: Observable<Course[]>;
   public searchCriterion: string;
   public currentPage = 0;
 
@@ -27,9 +30,15 @@ export class CoursesComponent implements OnInit {
   }
 
   loadCourses() {
-    this.courseService.getList(this.currentPage, this.searchCriterion).subscribe(({ courses }) => {
-      this.courses = this.currentPage > 0 ? this.courses.concat(courses) : courses;
-    });
+    // this.courseService.getList(this.currentPage, this.searchCriterion).subscribe(({ courses }) => {
+    //   this.courses = this.currentPage > 0 ? this.courses.concat(courses) : courses;
+    // });
+    // this.courseService.getList().subscribe(({ courses }) => {
+    //   this.courses = courses;
+    // });
+    this.courses$ = this.courseService.getList().pipe(
+      map(({ courses }) => courses)
+    );
   }
 
   loadMoreCourses() {

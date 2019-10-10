@@ -17,8 +17,8 @@
   </mat-form-field>
   <button mat-button type="submit">Submit</button>
 </form>
-
-<ng-container *ngIf="courses">
+<!--  -->
+<ng-container *ngIf="courses$ | async as courses">
   <mat-card *ngFor="let course of courses"
     class="course-item"
     appCreationDateStatus
