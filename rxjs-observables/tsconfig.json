@@ -5,8 +5,9 @@
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
+    "module": "commonjs",
     "experimentalDecorators": true,
-    "target": "es6",
+    "target": "es5",
     "lib": [
       "es2017",
       "dom"
