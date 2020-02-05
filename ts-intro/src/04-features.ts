@@ -9,16 +9,18 @@ interface List<T> {
   desc: string,
 }
 
-type stringList = List<string>;
-
-type state = 'on' | 'off';
-let someStatus: state = 'on';
+type StringList = List<string>;
 
 class Abc<T> {
   data: T;
 }
 
 let bar = new Abc<number>();
+
+// -------
+
+type state = 'on' | 'off';
+let someStatus: state = 'on';
 
 enum DaysOfWeek {
   Sun, // 0

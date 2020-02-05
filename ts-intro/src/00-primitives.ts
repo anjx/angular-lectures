@@ -26,7 +26,6 @@ let greetings: string = `Hello ${firstName} ${lastName}!`;
 let smth: number | string | boolean = 'some stuff';
 smth = 34;
 smth = false;
+smth = 'string';
 // smth = {}; // Error
 
-let a: number;
-a = true as any;

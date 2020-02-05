@@ -22,7 +22,7 @@ class Task implements ITask, ITaskManager {
   public isDone: boolean;
 
   private _additionalInfo: string = 'It`s a secret';
-  protected readonly  protectedSecret: string = 'Another secret';
+  protected readonly protectedSecret: string = 'Another secret';
 
   constructor(name: string, description: string, isDone: boolean) {
     this.name = name;

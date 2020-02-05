@@ -11,6 +11,16 @@ function undefinedvalue(): undefined {
   return;
 }
 
+function returnSmth(): string {
+  return '2';
+}
+
+function returnSmth2(): { a: number, b: number } {
+  return {
+    a: 1,
+    b: 2
+  }
+}
 //--------------------------------------------------
 
 function add(a: number, b: number): number {
@@ -44,12 +54,12 @@ function args(): void {
   logName('a', 'b');
   // logName('a', 'b', 'c');
 
-  function logAll(first: string, ...other: number[]): void {
+  function logAll(first: string, ...other: any[]): void {
     console.log(first);
-    other.forEach( (a: number) => console.log(a) );
+    other.forEach( (a) => console.log(a.slice(-2)) );
   }
 
-  logAll('Test', 1, 2, 3, 4, 5);
+  logAll('Test', 1, 2, '3', 4, '5');
 }
 
 //--------------------------------------------------
@@ -62,17 +72,24 @@ optionalArgs(1, 2);
 
 function defaultArgs(a = 1, b = 2) { /* */ }
 
-function objectOrNull(): { [key: string]: string } | null {
-  // return null;
-  return { a: '1' };
-}
-
-const arrow = (a: number, b: number): number => a + b;
-
 defaultArgs();
 defaultArgs(1);
 defaultArgs(1, 2);
 // defaultArgs('1', 2);
+
+function sayHi(name: string, text: string = 'How are you?'): string {
+  return `Hi ${name}! ${text}`;
+}
+
+//--------------------------------------------------
+
+function objectOrPrimitive(): { [key: string]: string } | number | string {
+  // return 2;
+  return 'str';
+  // return { a: '1' };
+}
+
+const arrow = (a: number, b: number): number => a + b;
 
 //--------------------------------------------------
 
