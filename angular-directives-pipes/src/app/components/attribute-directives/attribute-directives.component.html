@@ -25,7 +25,8 @@
 <mat-card>
   <mat-card-title>[ngStyle]</mat-card-title>
   <mat-card-content>
-    <p [ngStyle]="{ 'background-color': 'orange' }">Paragraph</p>
+    <p style="background-color: orange">Paragraph</p>
+    <p [ngStyle]="{ 'background-color': paragraphColor }">Paragraph</p>
     <p [style.background-color]="'pink'">Paragraph</p>
   </mat-card-content>
 </mat-card>
@@ -36,6 +37,7 @@
     <p [ngClass]="{ bold: true, italic: false, red: false }">Paragraph</p>
     <p [ngClass]="'bold italic red'">Paragraph</p>
     <p [ngClass]="['bold', 'italic', 'red']">Paragraph</p>
+    <p [class.italic]="true">Paragraph</p>
   </mat-card-content>
 </mat-card>
 
@@ -47,12 +49,3 @@
     </p>
   </mat-card-content>
 </mat-card>
-
-<h2>What if we try to bind a property(event) which is a part of multiple dependencies</h2>
-
-<app-element-with-props-to-override [propToOverride]="'any'" (click)="handleClick($event)">
-</app-element-with-props-to-override>
-
-<p propToOverride appHighlightWithCustomColor [innerHTML]="'Text is overriden'" [color]="'cyan'">
-  Text is not overriden
-</p>

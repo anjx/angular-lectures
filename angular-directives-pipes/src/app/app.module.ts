@@ -17,7 +17,6 @@ import {
 import {
   ElementWithPropsToOverrideComponent
 } from './components/attribute-directives/components/element-with-props-to-override/element-with-props-to-override.component';
-import { OverrideExampleDirective } from './components/attribute-directives/directives/override-example.directive';
 import { PipesExamplesComponent } from './components/pipes-examples/pipes-examples.component';
 import { UnlessDirective } from './components/structural-directives/directives/unless.directive';
 import { PleasePipe } from './components/pipes-examples/pipes/please.pipe';
@@ -38,7 +37,6 @@ import { IsDoneImpurePipe } from './components/pipes-examples/pipes/is-done-impu
     HighlightWithCustomColorDirective,
     HighlightCustomColorBindingDirective,
     ElementWithPropsToOverrideComponent,
-    OverrideExampleDirective,
     PipesExamplesComponent,
     AsyncPipeComponent,
     TasksExampleComponent,

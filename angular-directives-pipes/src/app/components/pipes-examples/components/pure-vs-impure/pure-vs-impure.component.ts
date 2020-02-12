@@ -33,13 +33,7 @@ export class PureVsImpureComponent {
   }
 
   changeReference() {
-    this.tasks = this.tasks.concat();
+    this.tasks = [...this.tasks];
     this.initIsDoneTasks();
-  }
-
-  changeStatus(currentTask: any) {
-    this.isDoneTasks = this.isDoneTasks.filter(
-      task => task.name !== currentTask.name
-    );
   }
 }

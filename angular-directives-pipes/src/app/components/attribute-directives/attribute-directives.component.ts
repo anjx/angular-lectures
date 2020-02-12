@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AttributeDirectivesComponent {
 
+  public paragraphColor = 'orange';
+
   public color: string;
 
   public handleClick(event: MouseEvent | string) {
