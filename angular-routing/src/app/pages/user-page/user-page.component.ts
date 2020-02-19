@@ -22,7 +22,7 @@ export class UserPageComponent implements OnInit {
   }
 
   public showInfo() {
-    console.log('Log Snapshot:', this.route.snapshot.params);
+    console.log('Log Snapshot:', this.route.snapshot);
   }
 
 }

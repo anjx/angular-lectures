@@ -12,13 +12,24 @@ import { LeftTabComponent } from './pages/tabs/pages/left-tab/left-tab.component
 import { RightTabComponent } from './pages/tabs/pages/right-tab/right-tab.component';
 
 const routes: Routes = [
+  // http://localhost:4200/home
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomePageComponent },
   { path: 'simple', component: SimpleRedicrectComponent },
   { path: 'user/:id', component: UserPageComponent },
   // http://localhost:4200/user
 
-  { path: 'lazy-loaded', loadChildren: './lazy-loaded/lazy-loaded.module#LazyLoadedModule' },
+  { path: 'lazy-loaded', loadChildren: () => import('./lazy-loaded/lazy-loaded.module').then(m => m.LazyLoadedModule) },
+
+  {
+    path: 'parent',
+    component: TabsComponent,
+    children: [
+      { path: '', redirectTo: 'left', pathMatch: 'full' },
+      { path: 'left', component: LeftTabComponent },
+      { path: 'right', component: RightTabComponent },
+    ]
+  },
 
   {
     path: 'admin',
@@ -28,18 +39,9 @@ const routes: Routes = [
 
   {
     path: 'another',
-    loadChildren: './another-module/another.module#AnotherModule',
+    loadChildren: () => import('./another-module/another.module').then(m => m.AnotherModule),
     // canActivate: [AuthGuard],
     canLoad: [LoadingGuard],
-  },
-
-  {
-    path: 'parent',
-    component: TabsComponent,
-    children: [
-      { path: 'left', component: LeftTabComponent },
-      { path: 'right', component: RightTabComponent },
-    ]
   },
 
   { path: '**', component: NotFoundComponent },

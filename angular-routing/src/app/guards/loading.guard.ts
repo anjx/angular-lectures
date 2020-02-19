@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LoadingGuard implements CanLoad {
-  canLoad(route: Route): boolean | Observable<boolean> | Promise<boolean> {
+  public canLoad(route: Route): boolean | Observable<boolean> | Promise<boolean> {
     console.log('check Loading Guard');
-    return false;
+    return true;
   }
 }

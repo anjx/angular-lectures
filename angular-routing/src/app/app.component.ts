@@ -13,7 +13,12 @@ export class AppComponent implements OnInit {
     // this.router.events.subscribe( event => console.log(event.__proto__.constructor.name) );
   }
 
+  public performSimpleRedirect() {
+    this.router.navigateByUrl('/simple');
+  }
+
   public goToUserPage() {
-    this.router.navigate(['user', '456']);
+    const obtainedUserId: string = '456';
+    this.router.navigate(['user', obtainedUserId]);
   }
 }
