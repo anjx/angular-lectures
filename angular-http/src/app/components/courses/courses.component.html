@@ -18,7 +18,7 @@
   <button mat-button type="submit">Submit</button>
 </form>
 <!--  -->
-<ng-container *ngIf="courses$ | async as courses">
+<ng-container *ngIf="courses && courses.length">
   <mat-card *ngFor="let course of courses"
     class="course-item"
     appCreationDateStatus
@@ -54,5 +54,5 @@
       </button>
     </aside>
   </mat-card>
-  <button mat-button (click)="loadMoreCourses()" style="width: 100%">Load more</button>
+  <button mat-button (click)="loadMoreCourses()" style="width: 100%" *ngIf="hasMoreCourses">Load more</button>
 </ng-container>

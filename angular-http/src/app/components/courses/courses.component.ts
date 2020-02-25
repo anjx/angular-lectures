@@ -1,8 +1,7 @@
-import { map } from 'rxjs/operators';
+
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from 'src/app/services/courses.service';
 import { Course } from 'src/app/models/course';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-courses',
@@ -10,8 +9,8 @@ import { Observable } from 'rxjs';
   styleUrls: ['./courses.component.scss']
 })
 export class CoursesComponent implements OnInit {
-  public courses: Course[];
-  public courses$: Observable<Course[]>;
+  public courses: Course[] = [];
+  public hasMoreCourses: boolean;
   public searchCriterion: string;
   public currentPage = 0;
 
@@ -30,15 +29,10 @@ export class CoursesComponent implements OnInit {
   }
 
   loadCourses() {
-    // this.courseService.getList(this.currentPage, this.searchCriterion).subscribe(({ courses }) => {
-    //   this.courses = this.currentPage > 0 ? this.courses.concat(courses) : courses;
-    // });
-    // this.courseService.getList().subscribe(({ courses }) => {
-    //   this.courses = courses;
-    // });
-    this.courses$ = this.courseService.getList().pipe(
-      map(({ courses }) => courses)
-    );
+    this.courseService.getList(this.currentPage).subscribe(({ courses, hasMoreCourses }) => {
+      this.courses = this.courses.concat(courses);
+      this.hasMoreCourses = hasMoreCourses;
+    });
   }
 
   loadMoreCourses() {
@@ -68,9 +62,9 @@ export class CoursesComponent implements OnInit {
     this.newCourse = { ...course };
   }
 
-  onRemove(course: Course) {
-    this.courseService.removeItem(course).subscribe(() => {
-      this.courses.splice(this.courses.indexOf(course, 1));
+  onRemove(courseToDelete: Course) {
+    this.courseService.removeItem(courseToDelete).subscribe(() => {
+      this.courses = this.courses.filter(course => course.id !== courseToDelete.id);
     });
   }
 }
