@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from 'src/app/services/courses.service';
 import { Course } from 'src/app/models/course';
@@ -17,7 +16,7 @@ export class CoursesComponent implements OnInit {
   public newCourse = {} as Course;
   public editMode = false;
 
-  constructor(private courseService: CourseService) { }
+  constructor(private courseService: CourseService) {}
 
   ngOnInit() {
     this.initCourses();
@@ -29,10 +28,15 @@ export class CoursesComponent implements OnInit {
   }
 
   loadCourses() {
-    this.courseService.getList(this.currentPage).subscribe(({ courses, hasMoreCourses }) => {
-      this.courses = this.courses.concat(courses);
-      this.hasMoreCourses = hasMoreCourses;
-    });
+    this.courseService
+      .getList(this.currentPage, this.searchCriterion)
+      .subscribe(({ courses, hasMoreCourses }) => {
+        this.courses =
+          this.currentPage > 0
+            ? this.courses.concat(courses)
+            : courses;
+        this.hasMoreCourses = hasMoreCourses;
+      });
   }
 
   loadMoreCourses() {
@@ -48,8 +52,10 @@ export class CoursesComponent implements OnInit {
   }
 
   editCourse() {
-    this.courseService.updateItem(this.newCourse).subscribe((edited) => {
-      const courseIdx = this.courses.findIndex((course) => course.id === edited.id);
+    this.courseService.updateItem(this.newCourse).subscribe(edited => {
+      const courseIdx = this.courses.findIndex(
+        course => course.id === edited.id
+      );
       this.courses[courseIdx] = edited;
 
       this.newCourse = {} as Course;
@@ -64,7 +70,9 @@ export class CoursesComponent implements OnInit {
 
   onRemove(courseToDelete: Course) {
     this.courseService.removeItem(courseToDelete).subscribe(() => {
-      this.courses = this.courses.filter(course => course.id !== courseToDelete.id);
+      this.courses = this.courses.filter(
+        course => course.id !== courseToDelete.id
+      );
     });
   }
 }

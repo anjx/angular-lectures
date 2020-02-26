@@ -32,7 +32,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
   ],
   providers: [
     CourseService,
-    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
