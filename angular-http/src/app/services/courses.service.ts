@@ -7,32 +7,41 @@ import { Course, CourseResponse, CourseAuthor } from '../models/course';
 
 @Injectable()
 export class CourseService {
-  private readonly COURSES_URL = 'http://localhost:3004/courses';
-  private readonly AUTHORS_URL = 'http://localhost:3004/authors';
-  // private readonly COURSES_URL = 'courses';
-  // private readonly AUTHORS_URL = 'authors';
+  // private readonly COURSES_URL = 'http://localhost:3004/courses';
+  // private readonly AUTHORS_URL = 'http://localhost:3004/authors';
+  private readonly COURSES_URL = 'courses';
+  private readonly AUTHORS_URL = 'authors';
   private readonly LIMIT = 10;
 
   constructor(private http: HttpClient) {}
 
-  getList(page: number = 0, searchCriteria?: string): Observable<CourseResponse> {
+  getList(
+    page: number = 0,
+    searchCriteria?: string
+  ): Observable<CourseResponse> {
     const params = new HttpParams()
       .set('start', (page * this.LIMIT).toString())
-      .set('count', (this.LIMIT).toString())
+      .set('count', this.LIMIT.toString())
       .set('textFragment', searchCriteria || '');
 
-    return this.http.get<Course[]>(this.COURSES_URL, { params })
+    return this.http
+      .get<Course[]>(this.COURSES_URL, {
+        params
+      })
       .pipe(
         retry(4),
-        map((courses) => ({ courses, hasMoreCourses: courses.length === this.LIMIT })),
-        catchError((error) => {
+        map(courses => ({
+          courses,
+          hasMoreCourses: courses.length === this.LIMIT
+        })),
+        catchError(error => {
           console.log('[ERROR]', error);
           return EMPTY;
-        }),
+        })
       );
   }
 
-  createCourse(course: Course): Observable<Course>  {
+  createCourse(course: Course): Observable<Course> {
     return this.http.post<Course>(this.COURSES_URL, course);
   }
 
@@ -46,17 +55,5 @@ export class CourseService {
 
   removeItem(course: Course): Observable<any> {
     return this.http.delete(`${this.COURSES_URL}/${course.id}`);
-  }
-
-  getAuthors(): Observable<CourseAuthor[]> {
-    return this.http.get<any[]>(`${this.AUTHORS_URL}`).pipe(
-      map((response) => response.map((item) => {
-        const fullName = item.name.split(' ');
-        return {
-          firstName: fullName[0],
-          lastName: fullName[1]
-        };
-      }))
-    );
   }
 }
