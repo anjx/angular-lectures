@@ -3,7 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { LazyLoadedPageComponent } from './pages/lazy-loaded-page/lazy-loaded-page.component';
 
 const routes: Routes = [
-  { path: '', component: LazyLoadedPageComponent }
+  { path: '', component: LazyLoadedPageComponent },
+  { path: 'another', component: LazyLoadedPageComponent }
 ];
 
 @NgModule({

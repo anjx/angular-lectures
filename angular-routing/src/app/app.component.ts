@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,15 @@ export class AppComponent implements OnInit {
   constructor(public router: Router) {}
 
   public ngOnInit() {
-    // this.router.events.subscribe( event => console.log(event.__proto__.constructor.name) );
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        console.log('Show spinner');
+      }
+
+      if (event instanceof NavigationEnd) {
+        console.log('Hide spinner');
+      }
+    });
   }
 
   public performSimpleRedirect() {
@@ -18,7 +26,7 @@ export class AppComponent implements OnInit {
   }
 
   public goToUserPage() {
-    const obtainedUserId: string = '456';
+    const obtainedUserId = '456';
     this.router.navigate(['user', obtainedUserId]);
   }
 }

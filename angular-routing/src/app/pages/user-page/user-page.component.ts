@@ -12,13 +12,7 @@ export class UserPageComponent implements OnInit {
   constructor(public route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.route.params.subscribe((params) => {
-      // console.log('[User Route]', params);
-      this.userId = params.id;
-      console.log(this.userId);
-    });
-
-    // console.log('Snapshot:', this.route.snapshot.params.id);
+    console.log(this.route.snapshot.data);
   }
 
   public showInfo() {

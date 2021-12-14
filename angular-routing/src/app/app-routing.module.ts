@@ -10,14 +10,24 @@ import { LoadingGuard } from './guards/loading.guard';
 import { TabsComponent } from './pages/tabs/tabs.component';
 import { LeftTabComponent } from './pages/tabs/pages/left-tab/left-tab.component';
 import { RightTabComponent } from './pages/tabs/pages/right-tab/right-tab.component';
+import { DataResolver } from './resolvers/data.resolver';
 
 const routes: Routes = [
-  // http://localhost:4200/home
+  // http://localhost:4200
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomePageComponent },
   { path: 'simple', component: SimpleRedicrectComponent },
-  { path: 'user/:id', component: UserPageComponent },
-  // http://localhost:4200/user
+  {
+    path: 'user/:id',
+    component: UserPageComponent,
+    resolve: {
+      user: DataResolver
+    },
+    data: {
+      smth: true,
+    }
+  },
+  // http://localhost:4200/user/123
 
   { path: 'lazy-loaded', loadChildren: () => import('./lazy-loaded/lazy-loaded.module').then(m => m.LazyLoadedModule) },
 
@@ -35,12 +45,15 @@ const routes: Routes = [
     path: 'admin',
     component: AdminPageComponent,
     canActivate: [AuthGuard],
+    data: {
+      requiredRoles: ['Admin', 'Moderator']
+    }
   },
 
   {
     path: 'another',
     loadChildren: () => import('./another-module/another.module').then(m => m.AnotherModule),
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     canLoad: [LoadingGuard],
   },
 
