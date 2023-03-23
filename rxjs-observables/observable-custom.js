@@ -1,41 +1,26 @@
 class Observable {
-    constructor(source) {
-        this.source = [...source];
+  constructor(source) {
+    this.source = source;
+  }
+
+  subscribe(next, error, complete) {
+    for (let data of this.source) {
+      next(data);
     }
 
-    subscribe(next, error, complete) {
-        try {
-            for (const value of this.source) {
-                // if(Math.random() >= .5) {
-                //     throw new Error('Whoops!');
-                // }
-                next(value);
-            }
-        } catch(err) {
-            error(err);
-        } finally {
-            complete();
-        }
-    }
+    complete();
+  }
 
-    filter(predicate) {
-        this.source = this.source.filter(predicate);
-        return this;
-    }
-
-    map(callback) {
-        this.source = this.source.map(callback);
-        return this;
-    }
+  filter() {
+    this.source = [...this.source].filter(data => data > 'h').join('');
+    return this;
+  }
 }
 
-new Observable('Observable')
-    .map((value) => value.toUpperCase())
-    .filter((value) => value > 'H')
-    .subscribe((value) => {
-        console.log('next: ', value);
-    }, (error) => {
-        console.log('error: ', error);
-    }, () => {
-        console.log('complete');
-    })
+const source = new Observable('Observable')
+  .filter()
+  .subscribe((data) => {
+    console.log(data);
+  }, () => { console.error('error') },
+    () => { console.log('complete') }
+  )

@@ -1,22 +1,17 @@
-function observe(observable, next, error, complete) {
-    try {
-        for (const value of observable) {
-            if(Math.random() >= .5) {
-                throw new Error('Whoops!');
-            }
-            next(value);
-        }
-    } catch(err) {
-        error(err);
-    } finally {
-        complete();
+function observe(source, next, error, complete) {
+  source.forEach(data => {
+    if (data > 2) {
+      return error();
     }
+
+    next(data);
+  });
+
+  complete();
 }
 
-observe('Observable', (value) => {
-    console.log('next: ', value);
-}, (error) => {
-    console.log('error: ', error);
-}, () => {
-    console.log('complete');
-});
+observe([1,2,3], (data) => {
+  console.log(data);
+}, (error) => console.error('error'),
+  () => console.log('complete')
+)

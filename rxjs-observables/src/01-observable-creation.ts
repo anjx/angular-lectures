@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-const source = Observable.create((observer) => {
+const source = new Observable((observer) => {
   let count = 0;
 
    const timer = setInterval(() => {
@@ -11,4 +11,15 @@ const source = Observable.create((observer) => {
    return () => clearInterval(timer);
 });
 
-source.subscribe((value) => console.log(value));
+// source.subscribe((value) => console.log(value));
+
+const promise = new Promise((resolve, reject) => {
+  let count = 0;
+
+  const timer = setInterval(() => {
+    resolve(count);
+    count++;
+  }, 500);
+
+  return () => clearInterval(timer);
+}).then(console.log);
