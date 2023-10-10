@@ -1,16 +1,36 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule, inject } from '@angular/core';
+import {
+  Routes,
+  RouterModule,
+  CanMatchFn,
+  Route,
+  UrlSegment,
+  CanActivateFn,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot
+} from '@angular/router';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { UserPageComponent } from './pages/user-page/user-page.component';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
-import { AuthGuard } from './guards/auth.guard';
 import { SimpleRedicrectComponent } from './pages/simple-redicrect/simple-redicrect.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { LoadingGuard } from './guards/loading.guard';
+import { PermissionService } from './services/permission.service';
 import { TabsComponent } from './pages/tabs/tabs.component';
 import { LeftTabComponent } from './pages/tabs/pages/left-tab/left-tab.component';
 import { RightTabComponent } from './pages/tabs/pages/right-tab/right-tab.component';
 import { DataResolver } from './resolvers/data.resolver';
+
+
+const UserToken = 'mocked_token';
+
+const canMatch: CanMatchFn = (route: Route, segments: UrlSegment[]) => {
+  return inject(PermissionService).canMatch(UserToken);
+};
+
+const canActivate: CanActivateFn =
+  (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+    return inject(PermissionService).canActivate(UserToken, route.params['id']);
+  };
 
 const routes: Routes = [
   // http://localhost:4200
@@ -44,7 +64,7 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminPageComponent,
-    canActivate: [AuthGuard],
+    canActivate: [canActivate],
     data: {
       requiredRoles: ['Admin', 'Moderator']
     }
@@ -53,8 +73,7 @@ const routes: Routes = [
   {
     path: 'another',
     loadChildren: () => import('./another-module/another.module').then(m => m.AnotherModule),
-    canActivate: [AuthGuard],
-    canLoad: [LoadingGuard],
+    canMatch: [canMatch],
   },
 
   { path: '**', component: NotFoundComponent },

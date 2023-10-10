@@ -9,6 +9,6 @@ import { map } from 'rxjs/operators';
 export class DataResolver implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
     console.log(route.data);
-    return timer(5000).pipe(map(() => `current user id: ${route.params.id}`));
+    return timer(5000).pipe(map(() => `current user id: ${route.params['id']}`));
   }
 }
