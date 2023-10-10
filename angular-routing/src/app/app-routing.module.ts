@@ -6,7 +6,8 @@ import {
   Route,
   UrlSegment,
   CanActivateFn,
-  ActivatedRouteSnapshot, RouterStateSnapshot
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot
 } from '@angular/router';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { UserPageComponent } from './pages/user-page/user-page.component';
